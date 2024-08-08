@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+m4 writing.m4.html > writing.html
+m4 index.m4.html > index.html

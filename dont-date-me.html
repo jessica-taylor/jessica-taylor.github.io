@@ -1,0 +1,177 @@
+<html>
+  <head>
+    <title>Don't date me</title>
+    <script type="text/javascript">
+      function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+          // call on next available tick
+          setTimeout(fn, 1);
+        } else {
+          document.addEventListener("DOMContentLoaded", fn);
+        }
+      }
+      docReady(function() {
+        let h = window.screen.availHeight;
+        let w = window.screen.availWidth;
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile || h > w || w > 2.2 * h) {
+          let elems = document.getElementsByClassName('scrollwork');
+          for (let i = 0; i < elems.length; i++) {
+            elems[i].style.display = 'none';
+          }
+        }
+      });
+    </script>
+    <style>
+body {
+        background-color: #cca5db;
+  color: #000;
+  margin: 0;
+}
+      img {
+        width: 40em;
+        height: auto;
+      }
+      .left {
+        width: 13%;
+        left: 0;
+      }
+      .center {
+        float: left;
+        width: 70%;
+        margin-left: 14%;
+        margin-right: 14%;
+        padding-left: 1%;
+        padding-right: 1%;
+        z-index: 1;
+        position: relative;
+        background-color: #dcb5eb;
+      }
+      .right {
+        width: 13%;
+        right: 0;
+      }
+      .bar {
+        height: 100%;
+        position: fixed;
+      }
+      .pics {
+        text-align: center;
+      }
+      .scrollwork {
+        width: 70%;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      @media (pointer:none), (pointer:coarse) {
+        .scrollwork {
+          display: none;
+        }
+      }
+      .right {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+      }
+      /* Style the scrollbar background */
+      ::-webkit-scrollbar {
+        background: #ecc5fb;
+      }
+
+      /* Style the scrollbar handle */
+      ::-webkit-scrollbar-thumb {
+        background: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left bar">
+        <img class="scrollwork" src="./images/scrollwork-left.png" alt="scrollwork" />
+      </div>
+      <div class="center">
+        <p>Some people have made <a href="https://www.wired.com/story/date-me-google-docs-and-the-hyper-optimized-quest-for-love/">&ldquo;date me&rdquo; docs</a>. Instead, I have made a &ldquo;don't date me&rdquo; doc explaining why not to date me.</p>
+        <ol>
+          <li>
+            <p>Dating is marriage-lite, and marriage sounds dreary and imprudent. Why would you commit to a single person and share finances with them and have people get mad at you if you ever split up? If it's a monogamous marriage, it's even worse, you're supposed to not have sex with anyone else. Why constrain optionality when there is so much to explore in life? I quite like feminist criticism of marriage, such as Voltairine de Cleyre's <a href="https://files.libcom.org/files/Voltairine_de_Cleyre.pdf">&ldquo;They Who Marry Do Ill&rdquo;</a>.</p>
+          </li>
+          <li>
+            <p>What are even the rules? At least with legal contracts including marriage there are rules that are written down somewhere. How do you know if getting dinner with someone is &ldquo;a date&rdquo; or not? If you have done it twice are you &ldquo;dating&rdquo;? To say you're &ldquo;dating&rdquo; someone do you have to first confirm that the other person would say they're &ldquo;dating&rdquo; you when asked? When are you allowed to ask the sex question? Can you still have sex with other people if you already had sex with a different person and you didn't clarify that you're &ldquo;poly&rdquo;? This is hard and doesn't make sense!</p>
+          </li>
+          <li>
+            <p>I'm already dating some other people. I mean, I'm not sure what subset of them would think they're dating me, or whether we're still in enough contact for it to count, but, there's at least some existing quasi-dating. You could take from this that I'm &ldquo;polyamorous&rdquo;, though I don't even structure my relationships discretely enough for &ldquo;polyamory&rdquo; to be a sufficient descriptor. Wow, what a mess.</p>
+          </li>
+          <li>
+            <p>I can't even decide what gender I am. I mean, I started out thinking I was a guy for basically biological reasons and then I learned about trans people and decided to try out the whole transition thing and I still haven't learned whether I'm really trans. And while I've realized ways I'm psychologically different from a typical man, I've also realized ways I'm psychologically different from a typical woman over time, and I just don't know anymore. How are you supposed to know whether dating someone is compatible with your sexual orientation if they can't even decide their own gender? (Luckily, I myself am bisexual)</p>
+          </li>
+          <li>
+            I'm 5 feet 9 inches. This is neither tall enough to be the height preferred by typical heterosexual women, nor short enough to make it easy to pass as a woman. Gendered height preferences are made even more confusing by the aforementioned point.
+          </li>
+          <li>
+            <p>I don't have a dick. I know a lot of people are into those, especially people I could reproduce with. I'm into dicks sometimes too, so I can empathize. Too bad if you were fantasizing about feeling my [REDACTED] lovingly brushing [REDACTED] entering your [REDACTED], I guess.</p>
+          </li>
+          <li>
+            <p>I'm not asexual. If you want to date me but aren't actually sexually into me, well, from my perspective you're asking to do some kind of performative thing that I'm mostly motivated to do because people said I'd have to do it to have sex. I like hanging out with friends one on one, but calling that &ldquo;dating&rdquo; if there's no sexual aspect just seems confusing.</p>
+          </li>
+          <li>
+            <p>I'm bad at BDSM. It's strange that so many people require this in a relationship, when did that happen? I end up talking with people who are more interested in getting dominated by me than having sex with me. What is this &ldquo;domination&rdquo; thing people are looking for, anyway? Is it, like, having bad things done to them? But not, like, actually bad, since they'd dislike that? But pretend bad? I can try doing weird pretend-bad things to people but it feels like some kind of boundary violation. Does it actually mean I'm in charge or does it mean there's a story that I'm in charge and I get blamed for doing the wrong thing and I'm actually supposed to satisfy the sub's whims? That sounds stressful!</p>
+          </li>
+          <li>
+            <p>Reading people's signals about when and how much they want me to touch them is hard and annoying. Sometimes the vibes are right and it feels good to touch people. Other times the vibes aren't like that but if asked the person would say they want me to touch them. I can still do it but it feels like a boundary violation and like I'm going to get accused of sexual harassment or something. And, apparently sometimes people <i>expect</i> the other person to make a risky move like that? I'm too neurotic for this, so you might have to communicate about your desires, as embarrassing as they may be.</p>
+          </li>
+          <li>
+            <p>I don't actually like sleeping in the same bed as another person. It makes it harder to fall asleep and then I'm tired the next day. Especially if there's ongoing bodily contact while I'm trying to sleep. There are a lot of things that could happen in bed with someone that I would enjoy, but literally sleeping with someone is uncomfortable. So, if you were planning on saving on rent by sleeping in the same bed as me, prepare to be disappointed.</p>
+          </li>
+          <li>
+            <p>Sometimes people expect dating to involve more serious loyalty and commitments than would actually make sense. I used to do this, I talked as if I'd still be with the same person years later and I wasn't, like I'd locked on to her. Then I get annoyed when other people do it to me. Like, to actually be loyal to someone, you have to have a life history that would make that loyalty make sense, game theoretically&hellip;right?</p>
+          </li>
+          <li>
+            <p>I know falling in love is real because I've experienced it. But I will probably never fall in love with you. If I've only fallen in love once in my life, and I thought I was aromantic before then, what are the chances? I can't just filter out everyone who I don't fall in love with because that's too many people. If people expect me to fall in love with them, they'll almost certainly be disappointed, and if they expect me to <i>say</i> I'm in love with them when I'm not, I'm not going to because I know love is real and I don't like lying.</p>
+          </li>
+          <li>
+            <p>I'm somewhat introverted. I'm pretty quiet with people I don't know or can't easily find common interests with. I reach out to people less than they reach out to me, on average. You might have to do some work to talk to me regularly.</p>
+          </li>
+          <li>
+            <p>I haven't made it big yet, and I&apos;m already 30. I was raised in Silicon Valley on a dream of someday Changing The World with a startup business and technology. I'm good at technology (especially algorithm design) but I'm bad at finishing large projects so I don't have much to show for it. I mean, I have a bunch of math and AI papers and blog posts on a variety of topics but those are abstract, they're not Success. I can hold out hope I'll make it big someday but what are the chances, really?</p>
+          </li>
+          <li>
+            <p>I have <a href="http://www.unstableontology.com">a blog</a> that's read by a lot of people. It might reveal too much about me and about people close to me. Maybe if you do something I'll write about it obliquely in a blog post. At least one person has told me that they really fear their interactions with me ending up in a blog post.</p>
+          </li>
+          <li>
+            <p>I consider myself a philosopher. I'm going to question everything. Maybe I'll destabilize your worldview. Or maybe I'll make social scripts hard to follow by questioning the implicit framework. I try to avoid lying (though I don't always succeed) so I say things that are controversial or cause people to be angry sometimes.</p>
+          </li>
+          <li>
+            <p>I haven't posted naked pictures of myself on the internet. How would you decide whether to date me if you haven't seen me naked? And how would you see me naked if you haven't dated me? It's a catch-22.</p>
+          </li>
+          <li>
+            <p>I have mental health issues. There was not much growing up except people suspected I had Asperger's (I've never been diagnosed, online tests used to say &ldquo;maybe&rdquo; and now they say &ldquo;no&rdquo;). Then things got very strange and I got confined to a mental hospital for a month due to catatonic psychosis. I thought I was some kind of demon and had started world war 3 and created a hell. I got less psychotic since then but had a lot of depression and PTSD issues (self diagnosed) from The Events. I've gotten very triggered a number of times, though not in 2021 or later. &nbsp;Oh, and I talk a lot about these experiences which might get annoying and repetitive.</p>
+          </li>
+          <li>
+            <p>I haven't decided on having kids. I mean, it sounds nice in theory to do someday, but also a huge time sink and annoying, and I don't have a very strict time limit (thanks, liquid nitrogen!). I'm going to wait until it feels right to do that rather than making a decision ahead of time. Sorry to disappoint if you wanted a specific answer.</p>
+          </li>
+          <li>
+            <p>Although I live in New York City most of the time, I travel a lot. It's hard to know if I'll be in the same place as you for very long.</p>
+          </li>
+          <li>
+            <p>Seriously, what kind of person puts out a &ldquo;don't date me&rdquo; doc? Do I have such low self-esteem that I'm only comfortable talking about myself in negative terms? Or am I using reverse psychology to manipulate people into dating me? That sounds like a red flag!<br><br></p>
+          </li>
+        </ol>
+        <p>Either I successfully convinced you not to date me, or you're still potentially interested after all that! If you're still potentially interested, maybe we can talk or hang out so I can finish convincing you not to date me. But, even if I've convinced you not to date me, don't take that to mean it would be a bad idea for us to do any activities that are usually associated with dating! I like talking with people one on one, having deep conversations, cuddling, sex, and occasionally falling in love. I'm not easily offended by people telling me they like me or that they'd like to do something with me that people usually only do while dating. If I&apos;m compatible enough with someone, I might make life plans with them or consider having kids with them. I just don&apos;t currently like to conceive of these different activities within a unified &quot;dating&quot; framework.</p>
+        <p>Pics attached to further discourage those for whom I'm not their type:</p>
+        <div class="pics">
+          <p><img src="./images/dont-date-2.jpg" alt="me" /></p>
+          <p><img src="./images/dont-date-1.jpg" alt="me" /></p>
+          <p><img src="./images/dont-date-3.jpg" alt="me" /></p>
+          <p><img src="./images/dont-date-4.jpg" alt="me" /></p>
+        </div>
+      </div>
+      <div class="right bar">
+        <img class="scrollwork" src="./images/scrollwork-left.png" alt="scrollwork" />
+      </div>
+    </div>
+  </body>
+</html>

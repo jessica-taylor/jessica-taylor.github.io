@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>Chess prep</title>
+    <link rel="stylesheet" href="./master.css"/>
+    <link rel="stylesheet" href="./chessboard.css"/>
+    <script src="./js/index.js"></script>
+  </head>
+  <body>
+    <div id="left">
+      <div id="board" style="width: 30em"></div>
+      <hr/>
+      <span>Promote to:</span><select id="promote-select">
+        <option value="q">Queen</option>
+        <option value="r">Rook</option>
+        <option value="b">Bishop</option>
+        <option value="k">Knight</option>
+      </select>
+      <br/>
+      <input type="submit" id="recommended-button" value="Toggle recommended"/>
+      <br/>
+      <input type="submit" id="delete-button" value="Delete move"/>
+      <br/>
+      <span id="up-button">&#11014;&#65039;</span>
+      <span id="down-button">&#11015;&#65039;</span>
+      <br/>
+      <input type="submit" id="export-button" value="Export as file"/>
+      <br/>
+      <label for="import-file">Import file</label>
+      <input type="file" name="import-file" id="import-file" accept=".json,.txt"/>
+      <br/>
+      <label for="position-notes">Comment on this position</label>
+      <input type="submit" id="save-notes-button" value="Save"/>
+      <br/>
+      <textarea id="position-notes" name="position-notes" rows="10" cols="60"></textarea>
+      <br/>
+      <a href="https://github.com/jessica-taylor/chess-prep">View this project on GitHub</a>
+      <br/>
+      <div class="tooltip">&#x2753;
+        <span class="tooltiptext">A tool for chess prep. Make moves to change the position and add branches to the tree. Click parts of the tree on the left to focus, showing the board of that position. Click arrows to expand/collapse. Underlined moves are considered recommended; non-recommended moves can be added to show good responses to them. Positions (not moves!) can be commented on; this tool detects transpositions. Use ctrl-arrow keys to move around. Export/import as JSON.</span>
+      </div>
+    </div>
+    <div id="right">
+      <div id="prep-display"></div>
+    </div>
+  </body>
+</html>

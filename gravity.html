@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>gravity simulation</title>
+<link href="master.css" rel="stylesheet" type="text/css"/></head>
+<style type="text/css">
+body {
+    margin:0;
+}
+ul {
+    position:fixed;
+    top:0;
+    left:500px;
+}
+
+</style>
+
+
+
+
+</head>
+<body onmousemove="updateMousePos(event)" onmousedown="mouseDown = true" onmouseup="mouseDown = false">
+      
+
+<canvas id="playarea" width="500" height="500"></canvas>
+<br>
+<ul>
+<li>click and hold to attract particles</li>
+<li>b to clear screen</li>
+<li>c to center particles</li>
+<li>r to reset</li>
+<li>s to stop particles</li>
+<li>t to enable/disable trails (disabling makes it slower)</li>
+<li>this has only been tested in Chrome</li>
+</ul>
+
+<script type="text/javascript" src="gravity.js">
+</script>
+
+</body></html>

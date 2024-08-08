@@ -1,0 +1,363 @@
+<!--
+Jessica's work scheduler!
+
+TODO:
+- set up a schedule of multiple timers
+- pausing, unpausing
+- skipping ahead or behind (30 secs / 1 minute / 5 minutes / whole timer) using keyboard shortcuts
+- make it an incremental game?
+-->
+<html>
+  <head>
+    <title>Work Scheduler!</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+    <style type="text/css">
+.timer {
+  font: sans-serif;
+  padding-right: 0.2em;
+  padding-left: 0.2em;
+}
+.timer-not-running {
+  font-size: 2em;
+}
+.timer-running {
+  font-size: 4em;
+}
+.timer-work {
+  color: #DF0174;
+}
+.timer-break {
+  color: #01A9DB;
+}
+.remove-timer {
+  cursor:pointer;
+  width: 1em;
+}
+.victory {
+  font-size: 1em;
+  font: sans-serif;
+  color: #000033;
+}
+.timer-button-collection {
+}
+.timer-button {
+  margin-top: 1em;
+  background-color: #BBFFBB;
+  cursor:pointer;
+}
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+function assert(condition, message) {
+  if (!condition) {
+    throw message || "Assertion failed";
+  }
+}
+
+function Stopwatch() {
+  this.startTime = new Date().getTime();
+}
+Stopwatch.prototype.secondsElapsed = function() {
+  return (new Date().getTime() - this.startTime) / 1000;
+};
+
+function Timer(type, duration) {
+  this.spec = new TimerSpec(type, duration);
+  this.stopwatch = null;
+  this.duration = duration;
+  this.type = type;
+}
+
+Timer.prototype.start = function() {
+  this.stopwatch = new Stopwatch();
+};
+
+Timer.prototype.stop = function() {
+  this.duration = this.secondsLeft();
+  this.stopwatch = null;
+};
+
+Timer.prototype.isRunning = function() {
+  return this.stopwatch != null;
+};
+
+Timer.prototype.secondsLeft = function() {
+  return this.duration - (this.stopwatch ? this.stopwatch.secondsElapsed() : 0);
+};
+
+Timer.prototype.isDone = function() {
+  return this.secondsLeft() < 0;
+};
+
+function twoDigit(num) {
+  return num < 10 ? '0' + num : '' + num;
+}
+
+function formatSeconds(secs) {
+  return Math.floor(secs / 60) + ":" + twoDigit(Math.floor(secs % 60));
+}
+
+function TimerView(timer, element) {
+  this.timer = timer;
+  this.element = element;
+  this.beeped = false;
+}
+
+TimerView.prototype.render = function() {
+  var secondsLeft = this.timer.secondsLeft();
+  if (secondsLeft <= 0) {
+    if (!this.beeped) {
+      beep();
+      this.beeped = true;
+    }
+    secondsLeft = 0;
+  }
+  this.element.empty();
+  if (this.timer.isRunning()) {
+    this.element.append($('<span>').attr('class', 'victory').text('What is the victory condition of the next '));
+  }
+  var span = $('<span>').attr('class', 'timer timer-' + this.timer.type +
+                              ' timer-' + (this.timer.isRunning() ? 'running' : 'not-running'));
+  span.text(formatSeconds(secondsLeft));
+  this.element.append(span);
+  if (this.timer.isRunning()) {
+    this.element.append($('<span>').attr('class', 'victory').text(' minutes?'));
+  }
+};
+
+function beep() {
+  var snd = new Audio("data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7xA4Tvh9Rz/y8QADBwMWgQAZG/ILNAARQ4GLTcDeIIIhxGOBAuD7hOfBB3/94gcJ3w+o5/5eIAIAAAVwWgQAVQ2ORaIQwEMAJiDg95G4nQL7mQVWI6GwRcfsZAcsKkJvxgxEjzFUgfHoSQ9Qq7KNwqHwuB13MA4a1q/DmBrHgPcmjiGoh//EwC5nGPEmS4RcfkVKOhJf+WOgoxJclFz3kgn//dBA+ya1GhurNn8zb//9NNutNuhz31f////9vt///z+IdAEAAAK4LQIAKobHItEIYCGAExBwe8jcToF9zIKrEdDYIuP2MgOWFSE34wYiR5iqQPj0JIeoVdlG4VD4XA67mAcNa1fhzA1jwHuTRxDUQ//iYBczjHiTJcIuPyKlHQkv/LHQUYkuSi57yQT//uggfZNajQ3Vmz+Zt//+mm3Wm3Q576v////+32///5/EOgAAADVghQAAAAA//uQZAUAB1WI0PZugAAAAAoQwAAAEk3nRd2qAAAAACiDgAAAAAAABCqEEQRLCgwpBGMlJkIz8jKhGvj4k6jzRnqasNKIeoh5gI7BJaC1A1AoNBjJgbyApVS4IDlZgDU5WUAxEKDNmmALHzZp0Fkz1FMTmGFl1FMEyodIavcCAUHDWrKAIA4aa2oCgILEBupZgHvAhEBcZ6joQBxS76AgccrFlczBvKLC0QI2cBoCFvfTDAo7eoOQInqDPBtvrDEZBNYN5xwNwxQRfw8ZQ5wQVLvO8OYU+mHvFLlDh05Mdg7BT6YrRPpCBznMB2r//xKJjyyOh+cImr2/4doscwD6neZjuZR4AgAABYAAAABy1xcdQtxYBYYZdifkUDgzzXaXn98Z0oi9ILU5mBjFANmRwlVJ3/6jYDAmxaiDG3/6xjQQCCKkRb/6kg/wW+kSJ5//rLobkLSiKmqP/0ikJuDaSaSf/6JiLYLEYnW/+kXg1WRVJL/9EmQ1YZIsv/6Qzwy5qk7/+tEU0nkls3/zIUMPKNX/6yZLf+kFgAfgGyLFAUwY//uQZAUABcd5UiNPVXAAAApAAAAAE0VZQKw9ISAAACgAAAAAVQIygIElVrFkBS+Jhi+EAuu+lKAkYUEIsmEAEoMeDmCETMvfSHTGkF5RWH7kz/ESHWPAq/kcCRhqBtMdokPdM7vil7RG98A2sc7zO6ZvTdM7pmOUAZTnJW+NXxqmd41dqJ6mLTXxrPpnV8avaIf5SvL7pndPvPpndJR9Kuu8fePvuiuhorgWjp7Mf/PRjxcFCPDkW31srioCExivv9lcwKEaHsf/7ow2Fl1T/9RkXgEhYElAoCLFtMArxwivDJJ+bR1HTKJdlEoTELCIqgEwVGSQ+hIm0NbK8WXcTEI0UPoa2NbG4y2K00JEWbZavJXkYaqo9CRHS55FcZTjKEk3NKoCYUnSQ0rWxrZbFKbKIhOKPZe1cJKzZSaQrIyULHDZmV5K4xySsDRKWOruanGtjLJXFEmwaIbDLX0hIPBUQPVFVkQkDoUNfSoDgQGKPekoxeGzA4DUvnn4bxzcZrtJyipKfPNy5w+9lnXwgqsiyHNeSVpemw4bWb9psYeq//uQZBoABQt4yMVxYAIAAAkQoAAAHvYpL5m6AAgAACXDAAAAD59jblTirQe9upFsmZbpMudy7Lz1X1DYsxOOSWpfPqNX2WqktK0DMvuGwlbNj44TleLPQ+Gsfb+GOWOKJoIrWb3cIMeeON6lz2umTqMXV8Mj30yWPpjoSa9ujK8SyeJP5y5mOW1D6hvLepeveEAEDo0mgCRClOEgANv3B9a6fikgUSu/DmAMATrGx7nng5p5iimPNZsfQLYB2sDLIkzRKZOHGAaUyDcpFBSLG9MCQALgAIgQs2YunOszLSAyQYPVC2YdGGeHD2dTdJk1pAHGAWDjnkcLKFymS3RQZTInzySoBwMG0QueC3gMsCEYxUqlrcxK6k1LQQcsmyYeQPdC2YfuGPASCBkcVMQQqpVJshui1tkXQJQV0OXGAZMXSOEEBRirXbVRQW7ugq7IM7rPWSZyDlM3IuNEkxzCOJ0ny2ThNkyRai1b6ev//3dzNGzNb//4uAvHT5sURcZCFcuKLhOFs8mLAAEAt4UWAAIABAAAAAB4qbHo0tIjVkUU//uQZAwABfSFz3ZqQAAAAAngwAAAE1HjMp2qAAAAACZDgAAAD5UkTE1UgZEUExqYynN1qZvqIOREEFmBcJQkwdxiFtw0qEOkGYfRDifBui9MQg4QAHAqWtAWHoCxu1Yf4VfWLPIM2mHDFsbQEVGwyqQoQcwnfHeIkNt9YnkiaS1oizycqJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");
+  snd.play();
+}
+
+function TimerSpec(type, duration) {
+  this.duration = duration;
+  this.type = type;
+}
+
+function TimerLog() {
+  this.completedTimers = [];
+}
+
+TimerLog.prototype.logCompletedTimer = function(spec) {
+  this.completedTimers.push(spec);
+};
+
+function TimerLogView(timerLog, element) {
+  this.timerLog = timerLog;
+  this.element = element;
+}
+
+TimerLogView.prototype.render = function() {
+  var self = this;
+  this.element.empty();
+  this.timerLog.completedTimers.forEach(function(spec) {
+    var info = spec.type + ' ' + formatSeconds(spec.duration);
+    self.element.append($('<li>').text(info));
+  });
+};
+
+function TimerQueue(log) {
+  this.timers = [];
+  this.log = log || null;
+}
+
+TimerQueue.prototype.addTimer = function(type, duration) {
+  this.timers.push(new Timer(type, duration));
+};
+
+TimerQueue.prototype.isDone = function() {
+  return this.timers.length == 0;
+};
+
+TimerQueue.prototype.isRunning = function() {
+  return !this.isDone() && this.timers[0].isRunning();
+};
+
+TimerQueue.prototype.start = function() {
+  if (!this.isDone()) {
+    this.timers[0].start();
+  }
+};
+
+TimerQueue.prototype.stop = function() {
+  if (!this.isDone()) {
+    this.timers[0].stop();
+  }
+};
+
+TimerQueue.prototype.update = function() {
+  if (!this.isDone()) {
+    if (this.timers[0].isDone()) {
+      if (this.log) {
+        this.log.logCompletedTimer(this.timers[0].spec);
+      }
+      var isRunning = this.isRunning();
+      this.timers.shift();
+      if (isRunning && this.timers.length > 0) {
+        // TODO: is this good?
+        this.timers[0].start();
+      }
+    }
+  }
+};
+
+TimerQueue.prototype.removeTimer = function(i) {
+  assert(i < this.timers.length);
+  this.timers.splice(i, 1);
+};
+
+function ListCache() {
+  this.kvs = [];
+}
+
+ListCache.prototype.get = function(key, makeValue) {
+  for (var i = 0; i < this.kvs.length; ++i) {
+    if (this.kvs[i][0] === key) {
+      return this.kvs[i][1];
+    }
+  }
+  var value = makeValue(key);
+  this.kvs.push([key, value]);
+  return value;
+};
+
+function TimerQueueView(timerQueue, element) {
+  this.timerQueue = timerQueue;
+  this.element = element;
+  this.timerViewCache = new ListCache();
+  this.prevViews = [];
+};
+
+TimerQueueView.prototype.render = function() {
+  var self = this;
+  this.timerQueue.update();
+  this.element.empty();
+  this.prevViews.forEach(function(view) {
+    view.render();
+  });
+  var newViews = [];
+  var i = 0;
+  this.timerQueue.timers.forEach(function(timer) {
+    var j = i;
+    var div = $('<div>').appendTo(self.element);
+    var timerViewAndRemoveX = self.timerViewCache.get(timer, function() {
+      var timerView = new TimerView(timer, $('<span>'));
+      var removeX = $('<span>').attr('class', 'glyphicon glyphicon-remove remove-timer');
+      removeX.on('click', function() {
+        console.log('clicked x ' + j);
+        self.timerQueue.removeTimer(j);
+      });
+      return [timerView, removeX];
+    });
+    var timerView = timerViewAndRemoveX[0];
+    newViews.push(timerView);
+    timerView.render();
+    div.append(timerView.element).append(timerViewAndRemoveX[1]);
+    ++i;
+  });
+  this.prevViews = newViews;
+};
+
+TimerQueueView.prototype.addKeyboardEvents = function() {
+  var self = this;
+  $(document).on('keypress', function(e) {
+    switch (e.which) {
+      case 32: // space
+        if (self.timerQueue.isRunning()) {
+          self.timerQueue.stop();
+        } else {
+          self.timerQueue.start();
+        }
+        return false;
+      default:
+        return true;
+    }
+  });
+};
+
+function TimerAddButton(timerQueue, specs, element) {
+  var self = this;
+  this.timerQueue = timerQueue;
+  this.specs = specs;
+  this.element = element;
+  $(this.element).on('click', function() {
+    specs.forEach(function(spec) {
+      self.timerQueue.addTimer(spec.type, spec.duration);
+    });
+  });
+}
+
+TimerAddButton.prototype.render = function() {
+  var self = this;
+  this.element.empty();
+  this.element.attr('class', 'timer-button');
+  this.specs.forEach(function(spec) {
+    var viewElement = $('<span>');
+    self.element.append(viewElement);
+    var view = new TimerView(new Timer(spec.type, spec.duration), viewElement);
+    view.render();
+  });
+};
+
+function TimerButtonCollection(timerQueue, specsList, element) {
+  this.timerQueue = timerQueue;
+  this.specsList = specsList;
+  this.element = element;
+}
+
+TimerButtonCollection.prototype.render = function() {
+  var self = this;
+  this.element.empty();
+  this.element.attr('class', 'timer-button-collection');
+  this.specsList.forEach(function(specs) {
+    var buttonElement = $('<div>');
+    self.element.append(buttonElement);
+    var button = new TimerAddButton(self.timerQueue, specs, buttonElement);
+    button.render();
+  });
+};
+
+
+function startMainTimer() {
+  var log = new TimerLog();
+  var timerQueue = new TimerQueue(log);
+  timerQueue.addTimer('break', 4);
+  timerQueue.addTimer('work', 8);
+  timerQueue.start();
+  var view = new TimerQueueView(timerQueue, $('#timer_queue'));
+  view.addKeyboardEvents();
+  var buttons = new TimerButtonCollection(timerQueue, [
+      [new TimerSpec('break', 5), new TimerSpec('work', 10)],
+      [new TimerSpec('break', 7)]
+  ], $('#timer_buttons'));
+  buttons.render();
+  var logView = new TimerLogView(log, $('#timer_log'));
+  function renderView() {
+    view.render();
+    logView.render();
+    setTimeout(renderView, 100);
+  }
+  renderView();
+}
+
+
+$(function() {
+  startMainTimer();
+});
+
+    </script>
+  </head>
+  <body>
+    <div id="timer_queue">
+    </div>
+    <div id="timer_buttons">
+    </div>
+    Log:
+    <ul id="timer_log">
+    </ul>
+  </body>
+</html>

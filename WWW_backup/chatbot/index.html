@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Fun with Chatbots</title>
+<link href="/master.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="worddata.js"></script>
+<script type="text/javascript" src="util.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript" src="parsing.js"></script>
+<script type="text/javascript" src="logic.js"></script>
+<script type="text/javascript" src="markov.js"></script>
+<script type="text/javascript" src="education.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="../navigation.js"></script>
+<style type="text/css">
+dt {
+	font-size: 120%;
+	color: #000000;
+}
+</style>
+</head>
+<body>
+<h3>A project by Jessica Taylor and Pat Boonyarittipong</h3>
+<p>This has only been tested in Google Chrome! It probably doesn't work with other browsers.</p>
+<div id="conversation" style="overflow: auto; width: 100ex; height: 16em">
+</div>
+<input type="text" id="userSaid" style="width: 100ex" 
+       onKeyPress="checkPressedEnter(event)"/>
+<input type="button" value="Say it (or press Enter)" 
+       onClick="registerUserSaid()"/>
+<br/>
+<p>Things to try:</p>
+<ul>
+<li>Interjections (hi, hello, bye, yay, etc.)</li>
+<li>Basic sentences with nouns, verbs, and adjectives (birds are animals, bob is a llama, I like all penguins, etc.)</li>
+<li>Prepositions (at, of, in, etc.) applied to nouns</li>
+<li>Relative clauses (every animal that has legs walks, bob has a dog that barks, etc.)</li>
+<li>Questions (put a question mark after a declaration; for example, Jessica is a student?)</li>
+<li>Say "reset" (erases all memory of the bot's interaction with the user but preserves education)</li>
+<li>Say "forget" (erases all memory, including education)</li>
+</ul>
+<p>Things that don't work yet:</p>
+<ul>
+<li>Conjunctions (and, or, if, etc.)</li>
+<li>Negation (not, don't, etc.)</li>
+<li>Auxilary verbs (do, can, should, will, etc.)</li>
+<li>Commands (write something, destroy the intruder, etc.)</li>
+<li>Complex sentences (While walking, I saw a pirate)</li>
+<li>Prepositions applied to verbs (Birds fly in the sky)</li>
+<li>Multiple sentences at a time</li>
+<li>Existential statements (such as "a red ball is under a table", "a bird flies") are very slow so they might not be confirmed.  They are much faster if you erase education using "forget".</li>
+</ul>
+
+<p>For best results, use only basic sentence structure with nouns, verbs, adjectives, relative clauses, and prepositions applied to nouns.  Here are some examples that show the program's ability to perform logic (remember to enter each sentence on its own line):</p>
+
+<ol>
+<li><ul>
+    <li>Socrates is a man.</li>
+    <li>Every man is mortal.</li>
+    <li>Socrates is mortal.</li>
+</ul></li><li><ul>
+    <li>Pat has a phone.</li>
+    <li>Phones are cool.</li>
+    <li>A freshman has something cool.</li>
+</ul></li><li><ul>
+    <li>Chance is a man who gardens.</li>
+    <li>Every man who gardens works.</li>
+    <li>Every man who works has a suit.</li>
+    <li>Chance has a suit.</li>
+</ul></li><li><ul>
+    <li>Jessica has IHUM.</li>
+    <li>Jessica has a fun class.</li>
+    <li>Everyone who has IHUM has a fun class.</li>
+</ul></li><li><ul>
+    <li>Forget.</li>
+    <li>A red ball is in a box.</li>
+    <li>Red things are bright.</li>
+    <li>I like all bright things.</li>
+    <li>Everyone who likes something in a box is happy.</li>
+    <li>I am happy.</li>
+</ul></li>
+</ol>
+<p>Here is what the program's initial education consists of (remember that you can discard this by saying "forget"):</p>
+<ul>
+  <li>you are a chatbot</li>
+  <li>you are a program</li>
+  <li>you are a computer</li>
+  <li>I am a human</li>
+  <li>I am a person</li>
+  <li>people are mammals</li>
+  <li>mammals have legs</li>
+  <li>animals that have legs walk</li>
+  <li>birds are animals</li>
+  <li>birds fly</li>
+  <li>mammals are animals</li>
+  <li>llamas are mammals</li>
+  <li>computers are technology</li>
+  <li>everything that walks moves</li>
+  <li>technology is fun</li>
+  <li>stanford is a fun college</li>
+  <li>ihum is a fun class</li>
+  <li>fun things are good</li>
+  <li>jessica likes everything good</li>
+  <li>pat likes everything good</li>
+  <li>you like everything good</li>
+  <li>students are people</li>
+  <li>students are in college</li>
+  <li>freshmen are students</li>
+  <li>jessica is a freshman at Stanford</li>
+  <li>pat is a freshman at Stanford</li>
+</ul>
+</body></html>

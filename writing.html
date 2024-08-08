@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Writing</title>
+<link href="master.css" rel="stylesheet" type="text/css" />
+<script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+
+<body>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/simple-sidebar.css" rel="stylesheet">
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" -->
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand"><a href="/">Jessica Taylor</a></li>
+      <li><a href="/resume.pdf">CV</a></li>
+      <li><a href="/writing.html">Writing</a></li>
+      <li><a href="http://unstableontology.com">Blog</a></li>
+      <li><a href="http://twitter.com/jessi_cata">Twitter</a></li>
+      <li><a href="/dont-date-me.html">Don't date me</a></li>
+      <li><h4>Code</h4></li>
+      <li class="sublink"><a href="https://github.com/jessica-taylor/hashlattice">Hashlattice</a></li>
+        <!--li class="sublink"><a href="https://github.com/jessica-taylor">Github</a></li -->
+        <!--li class="sublink"><a href="/reversible.html">Reversible programming</a></li -->
+        <!-- li class="sublink"><a href="http://jelv.is/simulation/">Physics</a></li -->
+      <li><h4>Fun with Javascript</h4></li>
+      <li class="sublink"><a href="/chessprep/">Chess prep</a></li>
+      <li class="sublink"><a href="/gravity.html">Gravity</a></li>
+      <li class="sublink"><a href="/plotting.html">Plotting</a></li>
+    </ul>
+  </div>
+  <div id="page-content-wrapper">
+    <div class="page-content inset">
+      <div class="content-header"><h1 id="title"></h1></div>
+      <div id="content">
+
+<p>I've written some stuff and consider some of it good enough to put here.</p>
+
+<h2>Research papers</h2>
+
+<p>2019: <a href="https://ictp.io/ictp-whitepaper.pdf">ICTP: A highly scalable blockchain-based system for currency, computation, and contracts</a><br/>
+A blockchain algorithm that supports smart contracts and privacy with O(n) scaling (ignoring logarithmic factors), where n is the number of users, assuming a constant number of transactions per user.  This is in contrast to previous systems such as Bitcoin and Ethereum, where the scaling is O(n^2).
+</p>
+
+<p>2016: <a href="https://intelligence.org/files/LogicalInduction.pdf">Logical Induction</a><br/>
+How might a computer algorithm assign probabilities to propositions such as "the quadrillionth digit of pi is 5", far ahead of the time when their truth values can actually be computed?
+We present an
+algorithm assigning such probabilities in as asymptotically reasonable manner.
+</p>
+
+<p>2016: <a href="https://intelligence.org/files/AlignmentMachineLearning.pdf">Alignment for Advanced Machine Learning Systems</a><br/>
+As learning
+systems become increasingly intelligent and autonomous, what design principles
+can best ensure that their behavior is aligned with the interests of the operators?  This is the research agenda most of my effort is currently focused on.
+</p>
+
+<p>2016: <a href="http://www.auai.org/uai2016/proceedings/papers/87.pdf">A Formal Solution to the Grain of Truth Problem</a><br/>
+  We show that reflective variants of AIXI solve a long-standing problem in game theory: how can two agents learn to model the other agent's policy in a Bayesian manner,
+  with their beliefs having a `grain of truth' in the sense of assigning non-negligible probability to the other agent's actual policy?
+</p>
+
+<p>2016: <a href="https://intelligence.org/files/QuantilizersSaferAlternative.pdf">Quantilizers: A Safer Alternative to Maximizers for Limited Optimization</a><br/>
+An alternative to <a href="https://en.wikipedia.org/wiki/Expected_utility_hypothesis">expected utility maximization</a>, derived using worst-case assumptions about how much different actions cost.  Presented at an AAAI symposium.
+</p>
+
+<p>2015: <a href="https://intelligence.org/files/ReflectiveSolomonoffAIXI.pdf">Reflective Variants of Solomonoff Induction and AIXI</a><br/>
+Using reflective oracles (see next paper) to implement variants of <a href="http://www.hutter1.net/publ/aixiaxiom2.pdf">Solomonoff induction and AIXI</a> that can reason about environments that contain them.  Presented at AGI 2015.
+</p>
+
+<p>2015: <a href="http://arxiv.org/pdf/1508.04145v1.pdf">Reflective Oracles: A Foundation for Classical Game Theory</a>
+When trying to define what it means for different programs to correctly predict each other's outputs, one runs into
+self-reference paradoxes.  Here we use randomization to get around these, and use this result for defining
+<a href="http://plato.stanford.edu/entries/decision-causal/">causal decision theory</a> in multi-agent environments, which turns out to yield <a href="https://en.wikipedia.org/wiki/Nash_equilibrium">Nash equilibria</a>.  Note that this is an extended version of a <a href="https://intelligence.org/files/ReflectiveOraclesAI.pdf">paper</a> presented at <a href="https://www.yoursaas.com/websites/36224472513387025486/">LORI-V</a>.
+</p>
+
+<p>2013: <a href="http://papers.nips.cc/paper/4966-learning-stochastic-inverses.pdf">Learning Stochastic Inverses</a><br/>
+<!-- Joint work with <a href="http://stuhlmueller.org/">Andreas Stuhlmüller</a> and <a href="http://www.stanford.edu/~ngoodman/">Noah Goodman</a> --> 
+A class of algorithms to "invert" a probabilistic program, speeding up inference.
+</p>
+
+<h2>Technical forum posts</h2>
+
+<p>
+More technical writing can be found at <a href="https://agentfoundations.org/submitted?id=Jessica_Taylor">Intelligent Agent Foundations Forum</a>.
+</p>
+
+<p>2018: <a href="https://www.alignmentforum.org/posts/Rcwv6SPsmhkgzfkDw/edt-solves-5-and-10-with-conditional-oracles">EDT solves 5 and 10 with conditional oracles</a><br/>
+<a href="https://en.wikipedia.org/wiki/Evidential_decision_theory">Evidential decision theory</a> has trouble when it is guaranteed to take some action, since then its beliefs about what happens if it takes another action are undefined.  This post fixes this problem using a method similar to <a href="https://en.wikipedia.org/wiki/Trembling_hand_perfect_equilibrium">Trembling hand perfect equilibrium</a>.
+</p>
+
+<p>2018: <a href="https://www.alignmentforum.org/posts/JKSS8GEu7DGX4YuxN/reducing-collective-rationality-to-individual-optimization">Reducing collective rationality to individual optimization in common-payoff games using MCMC</a><br/>
+<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a> can achieve global near-optima in the limit using only local optimization.  This post applies this idea to game theory to solve coordination games.
+</p>
+
+<p>2018: <a href="https://www.alignmentforum.org/posts/4xpDnGaKz472qB4LY/buridan-s-ass-in-coordination-games">Buridan's ass in coordination games</a><br/>
+A proof that solving coordination games under adversarial assumptions requires a shared source of randomness.
+</p>
+
+<p>2015: <a href="https://agentfoundations.org/item?id=853">In memoryless Cartesian environments, every UDT policy is a CDT+SIA policy</a><br/>
+A technical result relating <a href="https://wiki.lesswrong.com/wiki/Updateless_decision_theory">updateless decision theory</a> to <a href="https://en.wikipedia.org/wiki/Causal_decision_theory">causal decision theory</a> in environments that can contain copying, memory loss, etc.
+</p>
+
+
+<h2>Selected class papers</h2>
+
+<p>2014: <a href="/writing/density.pdf">Kernel-Based Extensions of Exponential Family Distributions</a><br/>
+Replacing the dot product in exponential families with a kernel product yields a universal class of distributions.  Here, we apply them to estimate densities using Newton's method.
+</p>
+
+<p>2014: <a href="/writing/blackbox.pdf">Black-Box Reductions in Mechanism Design</a><br/>
+<a href="http://arxiv.org/abs/1109.2067">Chawla et al. (2010)</a> proved that it is impossible to design a general efficient allocation mechanism that runs in polynomial time and gives bidders a dominant strategy of revealing their true preferences, when the mechanism only has access to an approximation algorithm in a black-box manner.  I summarize the findings and proofs, and I also comment on possible relaxations of the problem that might allow useful mechanisms.
+
+<p>2012: <a href="writing/dac.pdf">Dominant Assurance Contracts with Continuous Pledges</a> <br/>
+I expand on Alexander Tabarrok's <a href="http://mason.gmu.edu/~atabarro/PrivateProvision.pdf">work on dominant assurance contracts</a> to analyze the case when pledges can take on any value, not only 2 different values.  Code is <a href="/writing/dac.py">here</a>.</p>
+
+<p>2011: <a href="writing/rba.pdf">Compressionism: A New Theory of the Mind Based on Data Compression</a><br/>
+My research-based argument for PWR 1.  An analytic philosophy/AI paper on a theory of the mind based on data compression.  Essentially, compressionism is based on the idea that finding short but complete descriptions for one's experiences is equivalent to understanding them.  I attempt to expanded on the ideas of Ray Solomonoff and Phil and Rebecca Maguire to create a more comprehensive theory of the mind based on this principle and respond to Searle's criticisms of AI.  I think a lot of these ideas are wrong or incomplete, but this is an interesting snapshot of the reasoning that has led me to my current research.  Thanks to my PWR instructor, Michael Reid, for all his help on this paper.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

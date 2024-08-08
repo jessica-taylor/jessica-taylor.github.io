@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>plotting</title>
+<link href="master.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div style="float:right;">
+<canvas id="drawing" width="500" height="500"></canvas>
+<br/>
+<input id="width" type="text" value="500"/>
+<input id="height" type="text" value="500"/>
+<input type="button" value="Set dimensions" onclick="setDimensions()"/>
+</div>
+<input type="button" value="Draw" onclick="draw()"/>
+<br/>
+<textarea name="code" id="code" rows="50" cols="50" style="overflow:visible;">
+function dist2(a, b, c, d) {
+    var dx = c-a, dy = d-b;
+    return dx*dx + dy*dy;
+}
+function cos2(x) {
+    var c = Math.cos(x);
+    return c*c;
+}
+
+var off1 = 0;
+var m = Math.PI*32;
+var off2 = .25;
+return function(x, y) {
+    function wave(a, b) {
+        return cos2(m*dist2(x, y, a, b));
+    }
+    var r1 = wave(0, 0);
+    var r2 = wave(1, 1);
+    var r3 = wave(off2, 1-off2);
+    var r4 = wave(1-off2, off2);
+    var g1 = wave(.5, off1);
+    var g2 = wave(.5, 1 - off1);
+    var g3 = wave(off1, .5);
+    var g4 = wave(1 - off1, .5);
+    var b1 = wave(0, 1);
+    var b2 = wave(1, 0);
+    var b3 = wave(off2, off2);
+    var b4 = wave(1-off2, 1-off2);
+    return [
+        .25*(r1+r2+r3+r4),
+        .25*(g1+g2+g3+g4),
+        .25*(b1+b2+b3+b4)
+    ];
+};
+
+</textarea>
+<script type="text/javascript">
+<!--
+var debugCount = 0;
+function dbg(msg) {
+	if(debugCount++ < 20) alert(msg);
+}
+var data, pxs;
+try {
+var canv = document.getElementById("drawing");
+var width = canv.width, height = canv.height;
+var ctx = canv.getContext("2d");
+
+
+
+} catch(uex) {
+	alert("Initializing error: " + uex);
+}
+function clear() {
+	ctx.fillStyle = "rgb(0,0,0)";
+	ctx.fillRect(0, 0, width, height);
+	data = ctx.getImageData(0, 0, width, height);
+	pxs = data.data;
+}
+clear();
+var widthInput = document.getElementById("width");
+var heightInput = document.getElementById("height");
+function setDimensions() {
+	width = canv.width = parseInt(widthInput.value);
+	height = canv.height = parseInt(heightInput.value);
+	clear();
+}
+function posmod(x, y) {
+	var result = x % y;
+	return result < 0 ? result + y : result;
+}
+function draw() {
+	try{
+	
+	/*var code = "function(x, y){" + document.getElementById("code").value + "}";
+	alert(code);
+	var fn;
+	try {
+		fn = eval(code);
+	} catch(pex) {
+		alert("Error while parsing code: " + pex);
+		return;
+	}*/
+	var code = "function getRGBfun() { " + document.getElementById("code").value + "}";
+	try {
+		eval(code);
+	} catch(pex) {
+		alert("Error while parsing code: " + pex);
+		return;
+	}
+	var getRGB = getRGBfun();
+	for(var y = 0; y < height; ++y) {
+		for(var x = 0; x < width; ++x) {
+			var rgb;
+			try {
+				rgb = getRGB(x / (width-1), y / (height-1));
+			} catch(rgbex) {
+				alert("Error while evaluating code: " + rgbex);
+				return;
+			}
+			//dbg(rgb);
+			var r, g, b;
+			try {
+				r = Math.floor(posmod(rgb[0]*255, 256));
+				g = Math.floor(posmod(rgb[1]*255, 256));
+				b = Math.floor(posmod(rgb[2]*255, 256));
+			} catch(outex) {
+				alert("Error while getting rgb values: " + outex);
+				return;
+			}
+			var i = 4 * (y * width + x);
+			pxs[i] = r;
+			pxs[i+1] = g;
+			pxs[i+2] = b;
+		}
+	}
+	//alert(pxs);
+	ctx.putImageData(data, 0, 0);
+	} catch(uex) {
+		alert("Unexpected error: " + uex);
+	}
+}
+//-->
+</script>
+<!--
+function dist2(a, b, c, d) {
+    var dx = c-a, dy = d-b;
+    return dx*dx + dy*dy;
+}
+function cos2(x) {
+    var c = Math.cos(x);
+    return c*c;
+}
+
+var m = Math.PI*32;
+return function(x, y) {
+    var r = cos2(m*x);
+    var b = cos2(m*y);
+    var g = 1-(r*(1-b)+b*(1-r));
+    var flipc = Math.cos(2*m*dist2(x, y, .5, .5));
+    function flip(n) {
+        return flipc*(n-.5)+.5;
+    }
+    return [flip(r), flip(g), flip(b)];
+};
+-->
+</body>
+</html>
